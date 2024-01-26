@@ -29,9 +29,13 @@ WHITE_HORSE_ICONS = [Image.open(f"./res/horse/white_horse_{i}.ico") for i in ran
 # black horse icon
 BLACK_HORSE_ICONS = [Image.open(f"./res/horse/black_horse_{i}.ico") for i in range(14)]
 # white parrot icon
-WHITE_PARROT_ICONS = [Image.open(f"./res/parrot/white_parrot_{i}.ico") for i in range(10)]
+WHITE_PARROT_ICONS = [
+    Image.open(f"./res/parrot/white_parrot_{i}.ico") for i in range(10)
+]
 # black parrot icon
-BLACK_PARROT_ICONS = [Image.open(f"./res/parrot/black_parrot_{i}.ico") for i in range(10)]
+BLACK_PARROT_ICONS = [
+    Image.open(f"./res/parrot/black_parrot_{i}.ico") for i in range(10)
+]
 
 RUNNING_ANIMALS_MAPPING = {
     "white_cat": WHITE_CAT_ICONS,
