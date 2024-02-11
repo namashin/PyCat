@@ -4,7 +4,7 @@ MiaCat is a system tray application for Windows that changes its icon based on C
 
 ## Demo
 
-![MiaCat Demo](demo.gif)
+![MiaCat Demo](res/demo.gif)
 
 ## Features
 
