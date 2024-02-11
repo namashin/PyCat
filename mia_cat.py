@@ -29,13 +29,9 @@ WHITE_HORSE_ICONS = [Image.open(f"./res/horse/white_horse_{i}.ico") for i in ran
 # black horse icon
 BLACK_HORSE_ICONS = [Image.open(f"./res/horse/black_horse_{i}.ico") for i in range(14)]
 # white parrot icon
-WHITE_PARROT_ICONS = [
-    Image.open(f"./res/parrot/white_parrot_{i}.ico") for i in range(10)
-]
+WHITE_PARROT_ICONS = [Image.open(f"./res/parrot/white_parrot_{i}.ico") for i in range(10)]
 # black parrot icon
-BLACK_PARROT_ICONS = [
-    Image.open(f"./res/parrot/black_parrot_{i}.ico") for i in range(10)
-]
+BLACK_PARROT_ICONS = [Image.open(f"./res/parrot/black_parrot_{i}.ico") for i in range(10)]
 
 RUNNING_ANIMALS_MAPPING = {
     "white_cat": WHITE_CAT_ICONS,
@@ -79,44 +75,26 @@ class MiaCat(object):
         cat_menu = pystray.Menu(
             pystray.MenuItem(
                 "White Cat",
-                lambda icon, item: self.change_running_animal(
-                    "white_cat", WHITE_CAT_ICONS
-                ),
-            ),
+                lambda icon, item: self.change_running_animal("white_cat", WHITE_CAT_ICONS),),
             pystray.MenuItem(
                 "Black Cat",
-                lambda icon, item: self.change_running_animal(
-                    "black_cat", BLACK_CAT_ICONS
-                ),
-            ),
+                lambda icon, item: self.change_running_animal("black_cat", BLACK_CAT_ICONS),),
         )
         horse_menu = pystray.Menu(
             pystray.MenuItem(
                 "White Horse",
-                lambda icon, item: self.change_running_animal(
-                    "white_horse", WHITE_HORSE_ICONS
-                ),
-            ),
+                lambda icon, item: self.change_running_animal("white_horse", WHITE_HORSE_ICONS),),
             pystray.MenuItem(
                 "Black Horse",
-                lambda icon, item: self.change_running_animal(
-                    "black_horse", BLACK_HORSE_ICONS
-                ),
-            ),
+                lambda icon, item: self.change_running_animal("black_horse", BLACK_HORSE_ICONS),),
         )
         parrot_menu = pystray.Menu(
             pystray.MenuItem(
                 "White Parrot",
-                lambda icon, item: self.change_running_animal(
-                    "white_parrot", WHITE_PARROT_ICONS
-                ),
-            ),
+                lambda icon, item: self.change_running_animal("white_parrot", WHITE_PARROT_ICONS),),
             pystray.MenuItem(
                 "Black Parrot",
-                lambda icon, item: self.change_running_animal(
-                    "black_parrot", BLACK_PARROT_ICONS
-                ),
-            ),
+                lambda icon, item: self.change_running_animal("black_parrot", BLACK_PARROT_ICONS),),
         )
         # sub menus
         animal_menus = pystray.Menu(
@@ -196,12 +174,8 @@ class MiaCat(object):
             await asyncio.sleep(sleep_duration)
             self.mia_cat.icon = animal_icon
 
-    def change_running_animal(
-        self, new_running_animal: str, new_animal_icons: List[Image.Image]
-    ) -> None:
-        logger.info(
-            f"Animal switched from {self.running_animal} to {new_running_animal}"
-        )
+    def change_running_animal(self, new_running_animal: str, new_animal_icons: List[Image.Image]) -> None:
+        logger.info(f"Animal switched from {self.running_animal} to {new_running_animal}")
 
         self.running_animal = new_running_animal
         self.running_animal_icons = new_animal_icons
@@ -209,18 +183,14 @@ class MiaCat(object):
 
     def start_exe(self, app_name: str) -> None:
         if APP_PATH[app_name] is None:
-            logger.error(
-                f'Application name "{app_name}" is called, but could not find path'
-            )
+            logger.error(f'Application name "{app_name}" is called, but could not find path')
             return
 
         try:
             subprocess.Popen([APP_PATH[app_name]])
             logger.info(f"{app_name} started as subprocess")
         except subprocess.CalledProcessError as ex:
-            logger.error(
-                f"Subprocess failed with return code {ex.returncode}. Output: {ex.output}"
-            )
+            logger.error(f"Subprocess failed with return code {ex.returncode}. Output: {ex.output}")
         except Exception as ex:
             logger.error(f"Error during subprocess execution: {ex}")
 

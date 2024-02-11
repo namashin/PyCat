@@ -3,9 +3,7 @@ from logging.handlers import TimedRotatingFileHandler
 
 
 class Logger(object):
-    def __init__(
-        self, logger_name: str = "mia_cat", log_level: int = logging.INFO
-    ) -> None:
+    def __init__(self, logger_name: str = "mia_cat", log_level: int = logging.INFO) -> None:
         self.logger = logging.getLogger(logger_name)
         self.logger.setLevel(log_level)
 
@@ -13,9 +11,7 @@ class Logger(object):
         fmt = logging.Formatter("%(asctime)s - %(levelname)s - %(message)s")
 
         # create a handler and set the formatter
-        handler = TimedRotatingFileHandler(
-            f"{logger_name}.log", when="m", interval=1, backupCount=10
-        )
+        handler = TimedRotatingFileHandler(f"{logger_name}.log", when="m", interval=1, backupCount=10)
         handler.setFormatter(fmt)
 
         # add the handler to the logger
