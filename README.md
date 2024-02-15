@@ -1,7 +1,5 @@
 # MiaCat
 
-MiaCat is a system tray application for Windows that changes its icon based on CPU usage. It also allows you to launch other applications such as WeChat, QQ, and Chrome from the system tray menu.
-
 ## Tags
 
 - `Python`
@@ -43,6 +41,11 @@ MiaCat is a system tray application for Windows that changes its icon based on C
     ```
 
 If everything is set up correctly, the MiaCat application should start, and you'll see its icon in the system tray.
+
+5. **If you want to make exe**
+```bash
+pyinstaller mia_cat.py logger.py --clean --name=mia_cat.exe --onefile --noconsole --icon=res/app.ico
+```
 
 ## Usage
 
