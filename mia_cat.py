@@ -208,11 +208,3 @@ if __name__ == "__main__":
     # app start
     mia_cat = MiaCat(run_animal)
     mia_cat.start_mia_cat()
-
-    """
-    【activate conda】
-    conda activate mia_cat
-    
-    【pyinstaller exe command】
-    pyinstaller mia_cat.py logger.py --clean --name=mia_cat.exe --onefile --noconsole --icon=res/app.ico
-    """
