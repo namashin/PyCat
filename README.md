@@ -70,7 +70,7 @@ MiaCat logs various events and information to help with troubleshooting and moni
 
 To view the logs, navigate to the log directory and open the log files using a text editor or log viewer tool.
 
-## Future Features
+# Future Features
 We plan to add support for macOS. Currently, MiaCat is only compatible with the Windows operating system, 
 but we aim to make it available for macOS in the future. 
 We look forward to your contributions!
