@@ -204,7 +204,7 @@ if __name__ == "__main__":
     config.read(INI_FILE_PATH)
 
     # get last running animal
-    run_animal = config.get("animal", "run_animal")
+    run_animal = config.get("animal", "run_animal", fallback="white_cat")
 
     # app start
     mia_cat = MiaCat(run_animal)
