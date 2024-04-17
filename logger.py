@@ -31,15 +31,3 @@ class Logger(object):
 
     def critical(self, message: str) -> None:
         self.logger.critical(message)
-
-
-# if __name__ == "__main__":
-#     # Logger Test
-#     TEST_LOG_PATH = "./log/test"
-#
-#     logger = Logger(TEST_LOG_PATH)
-#     logger.info("This is an info message")
-#     logger.debug("This is a debug message")
-#     logger.warning("This is a warning message")
-#     logger.error("This is an error message")
-#     logger.critical("This is a critical message")

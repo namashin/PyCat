@@ -188,6 +188,7 @@ class MiaCat(object):
                 return True
             return False
 
+        # MacOS
         with contextlib.suppress(psutil.NoSuchProcess, psutil.AccessDenied, psutil.ZombieProcess):
             for proc in psutil.process_iter():
                 if "python" in proc.name() and "mia_cat.py" in proc.cmdline():

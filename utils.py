@@ -11,11 +11,8 @@ def find_windows_abspath(exe_name: str) -> Optional[str]:
         if exe_name in files:
             return os.path.join(root, exe_name)
 
-    return None
-
 
 def find_mac_abspath(app_name):
     for root, dirs, _ in os.walk('/Applications'):
         if app_name in dirs:
             return os.path.join(root, app_name)
-    return None
