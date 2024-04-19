@@ -2,8 +2,8 @@
 
 ## Tags
 
-- `Python`
-  
+- `Python` `Windows` `Mac`
+
 ## Demo
 
 ![MiaCat Demo](res/demo.gif)
@@ -16,7 +16,7 @@
 
 ## Requirements
 
-- Windows operating system
+- Windows、Mac operating system
 - Python 3.10 or later
 
 ## Installation
@@ -26,11 +26,14 @@
         ```bash
         git clone https://github.com/namashin/MiaCat.git
         ```
-    - If you prefer to download the repository as a ZIP file, you can click on the "Code" button on the GitHub repository page and select "Download ZIP". After downloading, extract the contents to a directory of your choice.
+    - If you prefer to download the repository as a ZIP file, you can click on the "Code" button on the GitHub
+      repository page and select "Download ZIP". After downloading, extract the contents to a directory of your choice.
 
-2. **Install Python if you haven't already.** You can download Python from the [official website](https://www.python.org/downloads/).
+2. **Install Python if you haven't already.** You can download Python from
+   the [official website](https://www.python.org/downloads/).
 
-3. **Install the required Python packages using pip.** Navigate to the MiaCat directory in your terminal and run the following command:
+3. **Install the required Python packages using pip.** Navigate to the MiaCat directory in your terminal and run the
+   following command:
     ```bash
     pip install -r requirements.txt
     ```
@@ -43,6 +46,7 @@
 If everything is set up correctly, the MiaCat application should start, and you'll see its icon in the system tray.
 
 5. **If you want to make exe**
+
 ```bash
 pyinstaller mia_cat.py logger.py --clean --name=mia_cat.exe --onefile --noconsole --icon=res/app.ico
 ```
@@ -66,12 +70,7 @@ pyinstaller mia_cat.py logger.py --clean --name=mia_cat.exe --onefile --noconsol
 
 ## Logging
 
-MiaCat logs various events and information to help with troubleshooting and monitoring. The logs are stored in files named according to the logger name and rotated periodically to manage file size.
+MiaCat logs various events and information to help with troubleshooting and monitoring. The logs are stored in files
+named according to the logger name and rotated periodically to manage file size.
 
 To view the logs, navigate to the log directory and open the log files using a text editor or log viewer tool.
-
-# Future Features
-We plan to add support for macOS. Currently, MiaCat is only compatible with the Windows operating system, 
-but we aim to make it available for macOS in the future. 
-We look forward to your contributions!
-
