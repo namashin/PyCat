@@ -1,0 +1,5 @@
+asyncio
+configparser
+psutil
+pystray
+Pillow

@@ -1,6 +1,6 @@
 import asyncio
 import configparser
-import contextlib
+import os
 import platform
 import subprocess
 import threading
@@ -13,13 +13,7 @@ from PIL import Image
 import utils
 from logger import Logger
 
-IS_WINDOWS = False
-if platform.system() == "Windows":
-    IS_WINDOWS = True
-
-    from win32.lib import winerror
-    import win32api
-    import win32event
+IS_WINDOWS = (platform.system() == "Windows")
 
 logger = Logger("./log/mia_cat")
 
@@ -51,7 +45,6 @@ class MiaCat(object):
         self.running_animal = running_animal
         self.running_animal_icons = RUNNING_ANIMALS_MAPPING[running_animal]
         self.even_loop = None
-        self.mia_cat_mutex = None
 
         self.mia_cat = pystray.Icon(
             name="MiaCat",
@@ -120,6 +113,7 @@ class MiaCat(object):
 
     def start_mia_cat(self) -> None:
         if self.is_app_running():
+            logger.info(f"MiaCat is already running. Exiting.")
             return
 
         self.even_loop = asyncio.new_event_loop()
@@ -129,6 +123,7 @@ class MiaCat(object):
         main_thread.daemon = True
         main_thread.start()
 
+        logger.info(f"MiaCat is Starting...")
         self.mia_cat.run()
 
     def stop_mia_cat(self) -> None:
@@ -139,8 +134,9 @@ class MiaCat(object):
         with open(INI_FILE_PATH, "w") as cf:
             config.write(cf)
 
-        if IS_WINDOWS:
-            win32api.CloseHandle(self.mia_cat_mutex)
+        os.remove(LOCK_FILE_PATH)
+
+        logger.info(f"MiaCat is Ending...")
 
     async def start_running(self) -> None:
         while True:
@@ -171,34 +167,31 @@ class MiaCat(object):
             logger.error(f'Application name "{app_name}" is called, but could not find path')
             return
 
-        proc = subprocess.Popen(["open", "-a", app_path])
-        return_code = proc.wait()
+        if IS_WINDOWS:
+            proc = subprocess.Popen([app_path])
+        else:
+            proc = subprocess.Popen(["open", "-a", app_path])
 
-        if proc.returncode != 0:
-            logger.error(f"Application {MAC_APP_PATH[app_name]} failed to start with return code {return_code}.")
+        return_code = proc.wait()
+        if return_code != 0:
+            logger.error(f"Application {app_name} failed to start with return code {return_code}.")
 
     def get_cpu_percent(self) -> float:
         return psutil.cpu_percent()
 
     def is_app_running(self) -> bool:
-        if IS_WINDOWS:
-            self.mia_cat_mutex = win32event.CreateMutex(None, 0, "mia_cat_mutex")
-            if win32api.GetLastError() == winerror.ERROR_ALREADY_EXISTS:
-                logger.info(f"MiaCat is already running. Exiting.")
-                return True
-            return False
+        if os.path.exists(LOCK_FILE_PATH):
+            return True
 
-        # MacOS
-        with contextlib.suppress(psutil.NoSuchProcess, psutil.AccessDenied, psutil.ZombieProcess):
-            for proc in psutil.process_iter():
-                if "python" in proc.name() and "mia_cat.py" in proc.cmdline():
-                    logger.info(f"MiaCat is already running. Exiting.")
-                    return True
+        with open(LOCK_FILE_PATH, "w") as f:
+            f.write("MiaCat is running.")
+
         return False
 
 
 if __name__ == "__main__":
     INI_FILE_PATH = "./ini/settings.ini"
+    LOCK_FILE_PATH = "./log/mia_cat.lock"
 
     config = configparser.ConfigParser()
     config.read(INI_FILE_PATH)
