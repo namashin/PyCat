@@ -43,7 +43,7 @@ class PyCat(object):
         self.running_animal_icons = RUNNING_ANIMALS_MAPPING[running_animal]
         self.even_loop = None
 
-        self.mia_cat = pystray.Icon(
+        self.py_cat = pystray.Icon(
             name="py_cat",
             title="CPU : " + str(self.get_cpu_percent()),
             icon=self.running_animal_icons[0],
@@ -103,12 +103,12 @@ class PyCat(object):
         main_menus = pystray.Menu(
             pystray.MenuItem("Animals", animal_menus),
             pystray.MenuItem("Apps", mac_app_menus),
-            pystray.MenuItem("Exit", self.stop_mia_cat),
+            pystray.MenuItem("Exit", self.end),
         )
 
         return main_menus
 
-    def start_mia_cat(self) -> None:
+    def start(self) -> None:
         if self.is_app_running():
             return
 
@@ -119,11 +119,11 @@ class PyCat(object):
         main_thread.daemon = True
         main_thread.start()
 
-        self.mia_cat.run()
+        self.py_cat.run()
 
-    def stop_mia_cat(self) -> None:
+    def end(self) -> None:
         self.even_loop.stop()
-        self.mia_cat.stop()
+        self.py_cat.stop()
 
         config.set("animal", "run_animal", self.running_animal)
         with open(INI_FILE_PATH, "w") as cf:
@@ -137,14 +137,14 @@ class PyCat(object):
 
     async def run_animal(self) -> None:
         cpu_percent = self.get_cpu_percent()
-        self.mia_cat.title = f"CPU: {str(cpu_percent)} %"
+        self.py_cat.title = f"CPU: {str(cpu_percent)} %"
 
         # adjust the speed based on CPU usage
         sleep_duration = 0.01 / (cpu_percent / 100 + 0.1)
 
         for animal_icon in self.running_animal_icons:
             await asyncio.sleep(sleep_duration)
-            self.mia_cat.icon = animal_icon
+            self.py_cat.icon = animal_icon
 
     def change_running_animal(self, new_running_animal: str, new_animal_icons: List[Image.Image]) -> None:
         self.running_animal = new_running_animal
@@ -181,7 +181,7 @@ class PyCat(object):
 
 if __name__ == "__main__":
     INI_FILE_PATH = "./ini/settings.ini"
-    LOCK_FILE_PATH = "./mia_cat.lock"
+    LOCK_FILE_PATH = "./py_cat.lock"
 
     config = configparser.ConfigParser()
     config.read(INI_FILE_PATH)
@@ -190,5 +190,5 @@ if __name__ == "__main__":
     run_animal = config.get("animal", "run_animal", fallback="white_cat")
 
     # app start
-    mia_cat = PyCat(run_animal)
-    mia_cat.start_mia_cat()
+    py_cat = PyCat(run_animal)
+    py_cat.start()
