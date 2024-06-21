@@ -12,15 +12,19 @@ from PIL import Image
 
 import utils
 
-IS_WINDOWS = (platform.system() == "Windows")
+IS_WINDOWS = platform.system() == "Windows"
 
 RUNNING_ANIMALS_MAPPING = {
     "white_cat": [Image.open(f"./res/cat/white_cat_{i}.png") for i in range(5)],
     "black_cat": [Image.open(f"./res/cat/black_cat_{i}.png") for i in range(5)],
     "white_horse": [Image.open(f"./res/horse/white_horse_{i}.png") for i in range(14)],
     "black_horse": [Image.open(f"./res/horse/black_horse_{i}.png") for i in range(14)],
-    "white_parrot": [Image.open(f"./res/parrot/white_parrot_{i}.png") for i in range(10)],
-    "black_parrot": [Image.open(f"./res/parrot/black_parrot_{i}.png") for i in range(10)],
+    "white_parrot": [
+        Image.open(f"./res/parrot/white_parrot_{i}.png") for i in range(10)
+    ],
+    "black_parrot": [
+        Image.open(f"./res/parrot/black_parrot_{i}.png") for i in range(10)
+    ],
 }
 
 if IS_WINDOWS:
@@ -33,7 +37,7 @@ else:
     MAC_APP_PATH = {
         "wechat": utils.find_mac_abspath("WeChat.app"),
         "qq": utils.find_mac_abspath("QQ.app"),
-        "chrome": utils.find_mac_abspath("Google Chrome.app")
+        "chrome": utils.find_mac_abspath("Google Chrome.app"),
     }
 
 
@@ -54,48 +58,59 @@ class PyCat(object):
         cat_menu = pystray.Menu(
             pystray.MenuItem(
                 "While Cat",
-                lambda icon, item: self.change_running_animal("white_cat",
-                                                              RUNNING_ANIMALS_MAPPING["white_cat"]),
+                lambda icon, item: self.change_running_animal(
+                    "white_cat", RUNNING_ANIMALS_MAPPING["white_cat"]
+                ),
             ),
             pystray.MenuItem(
                 "Black Cat",
-                lambda icon, item: self.change_running_animal("black_cat",
-                                                              RUNNING_ANIMALS_MAPPING["black_cat"]), ),
+                lambda icon, item: self.change_running_animal(
+                    "black_cat", RUNNING_ANIMALS_MAPPING["black_cat"]
+                ),
+            ),
         )
 
         horse_menu = pystray.Menu(
             pystray.MenuItem(
                 "White Horse",
-                lambda icon, item: self.change_running_animal("white_horse",
-                                                              RUNNING_ANIMALS_MAPPING["white_horse"]), ),
+                lambda icon, item: self.change_running_animal(
+                    "white_horse", RUNNING_ANIMALS_MAPPING["white_horse"]
+                ),
+            ),
             pystray.MenuItem(
                 "Black Horse",
-                lambda icon, item: self.change_running_animal("black_horse",
-                                                              RUNNING_ANIMALS_MAPPING["black_horse"]), ),
+                lambda icon, item: self.change_running_animal(
+                    "black_horse", RUNNING_ANIMALS_MAPPING["black_horse"]
+                ),
+            ),
         )
 
         parrot_menu = pystray.Menu(
             pystray.MenuItem(
                 "White Parrot",
-                lambda icon, item: self.change_running_animal("white_parrot",
-                                                              RUNNING_ANIMALS_MAPPING["white_parrot"]), ),
+                lambda icon, item: self.change_running_animal(
+                    "white_parrot", RUNNING_ANIMALS_MAPPING["white_parrot"]
+                ),
+            ),
             pystray.MenuItem(
                 "Black Parrot",
-                lambda icon, item: self.change_running_animal("black_parrot",
-                                                              RUNNING_ANIMALS_MAPPING["black_parrot"]), ),
+                lambda icon, item: self.change_running_animal(
+                    "black_parrot", RUNNING_ANIMALS_MAPPING["black_parrot"]
+                ),
+            ),
         )
 
         # animal menus
         animal_menus = pystray.Menu(
             pystray.MenuItem("Cat", cat_menu),
             pystray.MenuItem("Horse", horse_menu),
-            pystray.MenuItem("Parrot", parrot_menu)
+            pystray.MenuItem("Parrot", parrot_menu),
         )
 
         # application menus
         mac_app_menus = pystray.Menu(
             pystray.MenuItem("WeChat", lambda icon, item: self.launch_app("wechat")),
-            pystray.MenuItem("QQ", lambda icon, item: self.launch_app("qq")),
+            pystray.MenuItem("QQ", lambda icon, item: py_cat.launch_app("qq")),
             pystray.MenuItem("Chrome", lambda icon, item: self.launch_app("chrome")),
         )
 
@@ -146,11 +161,14 @@ class PyCat(object):
             await asyncio.sleep(sleep_duration)
             self.py_cat.icon = animal_icon
 
-    def change_running_animal(self, new_running_animal: str, new_animal_icons: List[Image.Image]) -> None:
+    def change_running_animal(
+            self, new_running_animal: str, new_animal_icons: List[Image.Image]
+    ) -> None:
         self.running_animal = new_running_animal
         self.running_animal_icons = new_animal_icons
 
-    def launch_app(self, app_name: str) -> None:
+    @staticmethod
+    def launch_app(app_name: str) -> None:
         if IS_WINDOWS:
             app_path = WINDOWS_APP_PATH[app_name]
         else:
@@ -166,10 +184,12 @@ class PyCat(object):
 
         proc.wait()
 
-    def get_cpu_percent(self) -> float:
+    @staticmethod
+    def get_cpu_percent() -> float:
         return psutil.cpu_percent()
 
-    def is_app_running(self) -> bool:
+    @staticmethod
+    def is_app_running() -> bool:
         if os.path.exists(LOCK_FILE_PATH):
             return True
 
