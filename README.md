@@ -61,7 +61,7 @@ pyinstaller py_cat.py utils.py --clean --name=py_cat.exe --onefile --noconsole -
 
 ## Configuration
 
-- Application settings are stored in `./ini/settings.ini`.
+- Application settings are stored in `ini/settings.ini`.
 - You can modify the configuration file to add new applications or customize the behavior of PyCat.
 
 ## Development
