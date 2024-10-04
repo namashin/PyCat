@@ -200,7 +200,7 @@ class PyCat(object):
 
 
 if __name__ == "__main__":
-    INI_FILE_PATH = "./ini/settings.ini"
+    INI_FILE_PATH = "./settings.ini"
     LOCK_FILE_PATH = "./py_cat.lock"
 
     config = configparser.ConfigParser()
